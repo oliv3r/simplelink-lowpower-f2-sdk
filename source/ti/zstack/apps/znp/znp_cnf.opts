@@ -32,3 +32,5 @@
 -DMT_GP_CB_FUNC
 
 -DMT_APP_CNF_FUNC
+
+-include ../../../source/ti/zstack/stack/config/preinclude.h
