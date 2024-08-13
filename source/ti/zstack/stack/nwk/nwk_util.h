@@ -638,6 +638,10 @@ extern uint8_t (*pNwkNotMyChildListAdd)( uint16_t devAddr, uint32_t timeoutValue
 extern void (*pNwkNotMyChildListDelete)( uint16_t devAddr );
 extern void (*pNwkNotMyChildSendLeave)( uint16_t dstAddr );
 
+// Custom functions
+uint8_t NwkDisableChildAgingLeaveAdd(uint8_t* extAddr, uint8_t numBytesToMatch);
+void NwkNotMyChildSendLeaveCustom(uint16_t dstAddr);
+
 /****************************************************************************
  * Utility function to copy NV items
  ****************************************************************************/
