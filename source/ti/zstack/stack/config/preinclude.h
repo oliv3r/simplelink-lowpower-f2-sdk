@@ -140,20 +140,3 @@
  */
 #define MAX_RTG_ENTRIES 250
 #define ROUTE_EXPIRY_TIME 254
-
-// Set default transmit power to 9
-#ifdef CC1352P_2
-    #define TXPOWER 9
-
-    // Different configs, comment for "other" firmware
-    #define LAUNCHPAD_CONFIG 1
-    #ifdef LAUNCHPAD_CONFIG
-        #define CONFIG_RF_24GHZ                         0x0000001c
-        #define CONFIG_RF_HIGH_PA                       0x0000001d
-        #define SET_CCFG_MODE_CONF_XOSC_CAPARRAY_DELTA  0xc1
-    #else
-        #define CONFIG_RF_24GHZ                         0x0000006
-        #define CONFIG_RF_HIGH_PA                       0x0000005
-        #define SET_CCFG_MODE_CONF_XOSC_CAPARRAY_DELTA  0xfa
-    #endif
-#endif
