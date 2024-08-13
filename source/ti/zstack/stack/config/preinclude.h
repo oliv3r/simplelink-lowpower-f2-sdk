@@ -89,23 +89,3 @@
 // Determines the maximum number of “secure partners” that the network Trust Center (ZC) can support.
 // This value will be the upper limit of Zigbee 3.0 devices which are allowed in the network
 #define ZDSECMGR_TC_DEVICE_MAX 200
-
-// Set default transmit power to 9 for PA devices
-#if defined(CC1352P_2) || defined(DeviceFamily_CC13X2X7)
-    #define TXPOWER 9
-#endif
-
-// CC1352P2 specific
-#if defined(CC1352P_2)
-    // Different configs, comment `LAUNCHPAD_CONFIG` for "other" firmware
-    #define LAUNCHPAD_CONFIG 1
-    #ifdef LAUNCHPAD_CONFIG
-        #define CONFIG_RF_24GHZ                         0x0000001c
-        #define CONFIG_RF_HIGH_PA                       0x0000001d
-        #define SET_CCFG_MODE_CONF_XOSC_CAPARRAY_DELTA  0xc1
-    #else
-        #define CONFIG_RF_24GHZ                         0x0000006
-        #define CONFIG_RF_HIGH_PA                       0x0000005
-        #define SET_CCFG_MODE_CONF_XOSC_CAPARRAY_DELTA  0xfa
-    #endif
-#endif
