@@ -66,9 +66,7 @@
 /* The starting address of the application.  Normally the interrupt vectors  */
 /* must be located at the beginning of the application.                      */
 
-#ifndef NVOCMP_NVPAGES
-#define NVOCMP_NVPAGES          2
-#endif
+#define NVOCMP_NVPAGES          3
 
 #define FLASH_BASE              0x00000000
 #define FLASH_SIZE              (0x56000 - (NVOCMP_NVPAGES * 0x2000))
