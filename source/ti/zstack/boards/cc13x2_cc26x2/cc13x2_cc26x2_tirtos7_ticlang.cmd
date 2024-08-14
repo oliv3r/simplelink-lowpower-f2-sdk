@@ -60,7 +60,7 @@
 /* modifications in your CCS project and leave this file alone.              */
 /*                                                                           */
 /* --heap_size=0                                                             */
---stack_size=1024
+--stack_size=4096
 /* --library=rtsv7M3_T_le_eabi.lib                                           */
 
 /* The starting address of the application.  Normally the interrupt vectors  */

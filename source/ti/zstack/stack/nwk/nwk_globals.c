@@ -91,10 +91,10 @@
  * CONSTANTS
  */
 // Maximums for the data buffer queue
-#define NWK_MAX_DATABUFS_WAITING    8     // Waiting to be sent to MAC
-#define NWK_MAX_DATABUFS_SCHEDULED  5     // Timed messages to be sent
-#define NWK_MAX_DATABUFS_CONFIRMED  5     // Held after MAC confirms
-#define NWK_MAX_DATABUFS_TOTAL      12    // Total number of buffers
+#define NWK_MAX_DATABUFS_WAITING    48     // Waiting to be sent to MAC
+#define NWK_MAX_DATABUFS_SCHEDULED  30     // Timed messages to be sent
+#define NWK_MAX_DATABUFS_CONFIRMED  30     // Held after MAC confirms
+#define NWK_MAX_DATABUFS_TOTAL      72    // Total number of buffers
 
 // 1-255 (0 -> 256) X RTG_TIMER_INTERVAL
 // A known shortcoming is that when a message is enqueued as "hold" for a
