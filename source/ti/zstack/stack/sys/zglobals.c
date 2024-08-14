@@ -131,7 +131,7 @@ uint8_t zgSecurePermitJoin = TRUE;
 // TC Link Key. In this scenario, if this flag is TRUE, the Trust Center will
 // encrypt the outgoing NWK Key with the default TC Link Key (ZigbeeAlliance09).
 // If this flag is FALSE (default), the Trust Center will not send the NWK Key at all.
-uint8_t zgAllowRejoinsWithWellKnownKey = FALSE;
+uint8_t zgAllowRejoinsWithWellKnownKey = TRUE;
 
 //allowInstallCodes
 uint8_t zgAllowInstallCodes = ZG_IC_SUPPORTED_NOT_REQUIRED;
