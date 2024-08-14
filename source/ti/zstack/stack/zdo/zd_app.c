@@ -3163,6 +3163,13 @@ void ZDO_NetworkStatusCB( uint16_t nwkDstAddr, uint8_t statusCode, uint16_t dstA
     // Routing error for dstAddr, this is informational and a Route
     // Request should happen automatically.
   }
+
+  if ( (nwkDstAddr == NLME_GetShortAddr())
+        && (statusCode == NWKSTAT_SOURCE_ROUTE_FAILURE) )
+  {
+    RTG_RemoveRtgEntry( dstAddr, 0 );
+    NLME_RouteDiscoveryRequest( dstAddr, 0, 30 );
+  }
 }
 
 /******************************************************************************
