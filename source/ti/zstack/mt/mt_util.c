@@ -1525,6 +1525,8 @@ static void MT_UtilBindAddEntry(uint8_t *pBuf)
  ***************************************************************************************************/
 static void packDev_t(uint8_t *pBuf, associated_devices_t *pDev)
 {
+  memset(pBuf, 0, sizeof(associated_devices_t));
+
   if (NULL == pDev)
   {
     uint16_t rtrn = INVALID_NODE_ADDR;
