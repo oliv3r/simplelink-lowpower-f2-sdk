@@ -1685,6 +1685,8 @@ static void MT_ZdoMgmtPermitJoinRequest(uint8_t *pBuf)
   retValue = (uint8_t)ZDP_MgmtPermitJoinReq( &destAddr, duration, tcSignificance, 0);
   ignoreIndication = FALSE;
 
+  ZDSecMgrPermitJoining(duration);
+
   MT_BuildAndSendZToolResponse(((uint8_t)MT_RPC_CMD_SRSP | (uint8_t)MT_RPC_SYS_ZDO), cmdId, 1, &retValue);
 }
 
