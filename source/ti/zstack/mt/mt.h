@@ -468,6 +468,9 @@ extern "C"
 #endif
 #define MT_UTIL_BIND_ADD_ENTRY               0x4D
 
+#define MT_UTIL_ASSOC_REMOVE                 0x63
+#define MT_UTIL_ASSOC_ADD                    0x64
+
 #define MT_UTIL_ZCL_KEY_EST_INIT_EST         0x80
 #define MT_UTIL_ZCL_KEY_EST_SIGN             0x81
 
