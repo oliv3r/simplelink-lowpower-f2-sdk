@@ -441,6 +441,8 @@ extern "C"
 #define MT_UTIL_CALLBACK_SUB_CMD             0x06
 #define MT_UTIL_TIME_ALIVE                   0x09
 
+#define MT_UTIL_LED_CONTROL                  0x0A
+
 #define MT_UTIL_TEST_LOOPBACK                0x10
 #define MT_UTIL_DATA_REQ                     0x11
 
