@@ -676,6 +676,20 @@ void ZDO_ProcessNodeDescReq( zdoIncomingMsg_t *inMsg )
 
   if ( desc != NULL )
   {
+    uint8_t extAddr[Z_EXTADDR_LEN];
+    // Respond with Xiaomi manufacturer code when ieeAddr is withing Xiaomi address space
+    // Otherwise some devices don't work
+    // https://github.com/Koenkk/zigbee2mqtt/issues/9274
+    if (APSME_LookupExtAddr(inMsg->srcAddr.addr.shortAddr, extAddr) == TRUE &&
+         ((extAddr[7] == 0x04 && extAddr[6] == 0xcf && extAddr[5] == 0x8c) ||
+          (extAddr[7] == 0x54 && extAddr[6] == 0xef && extAddr[5] == 0x44))) {
+        desc->ManufacturerCode[0] = 0x5f;
+        desc->ManufacturerCode[1] = 0x11;
+    } else {
+        desc->ManufacturerCode[0] = 0x0;
+        desc->ManufacturerCode[1] = 0x0;
+    }
+
     ZDP_NodeDescMsg( inMsg, aoi, desc );
   }
   else
