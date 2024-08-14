@@ -1551,6 +1551,13 @@ static void packDev_t(uint8_t *pBuf, associated_devices_t *pDev)
     pBuf += 4;
     *pBuf++ = LO_UINT16(pDev->linkInfo.txFailure);
     *pBuf++ = HI_UINT16(pDev->linkInfo.txFailure);
+    *pBuf++ = pDev->endDev.endDevCfg;
+    OsalPort_bufferUint32( pBuf, pDev->endDev.deviceTimeout );
+    pBuf += 4;
+    OsalPort_bufferUint32( pBuf, pDev->timeoutCounter );
+    pBuf += 4;
+    *pBuf++ = pDev->keepaliveRcv;
+    *pBuf++ = pDev->ctrl;
   }
 }
 
