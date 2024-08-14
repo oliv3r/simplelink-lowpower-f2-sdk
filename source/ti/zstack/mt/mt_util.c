@@ -79,6 +79,9 @@
 #include "mt_zdo.h"
 #include "ssp.h"
 
+#include <ti/drivers/apps/LED.h>
+#include "ti_drivers_config.h"
+
 #if !defined NONWK
 
 #include "mt_nwk.h"
@@ -154,6 +157,7 @@ static void MT_UtilAPSME_LinkKeyNvIdGet(uint8_t *pBuf);
 #endif //MT_SYS_KEY_MANAGEMENT
 static void MT_UtilAPSME_RequestKeyCmd(uint8_t *pBuf);
 static void MT_UtilAssocCount(uint8_t *pBuf);
+static void MT_UtilLedControl(uint8_t *pBuf);
 static void MT_UtilAssocRemove(uint8_t *pBuf);
 static void MT_UtilAssocAdd(uint8_t *pBuf);
 static void MT_UtilAssocFindDevice(uint8_t *pBuf);
@@ -286,6 +290,10 @@ uint8_t MT_UtilCommandProcessing(uint8_t *pBuf)
 
   case MT_UTIL_ASSOC_COUNT:
     MT_UtilAssocCount(pBuf);
+    break;
+
+  case MT_UTIL_LED_CONTROL:
+    MT_UtilLedControl(pBuf);
     break;
 
   case MT_UTIL_ASSOC_FIND_DEVICE:
@@ -1410,6 +1418,37 @@ static void MT_UtilAssocCount(uint8_t *pBuf)
 
   MT_BuildAndSendZToolResponse(((uint8_t)MT_RPC_CMD_SRSP | (uint8_t)MT_RPC_SYS_UTIL), cmdId, 2, pBuf);
 }
+
+/***************************************************************************************************
+ * @fn      MT_UtilLedControl
+ *
+ * @brief   Proxy the LedControl() function.
+ *
+ * @param   pBuf - pointer to the received buffer
+ *
+ * @return  void
+ ***************************************************************************************************/
+static void MT_UtilLedControl(uint8_t *pBuf)
+{
+  uint8_t cmdId = pBuf[MT_RPC_POS_CMD1];
+  pBuf += MT_RPC_FRAME_HDR_SZ;
+
+  uint8_t mode =  pBuf[1];
+
+  if (gLedHandle == NULL) {
+    LED_Params ledParams;
+    LED_Params_init(&ledParams);
+    gLedHandle = LED_open(CONFIG_LED_GREEN, &ledParams);
+  }
+
+  if (mode==0) {
+    LED_setOff(gLedHandle);
+  } else if (mode == 5) {
+    gLedsDisabled = TRUE;
+    LED_setOff(gLedHandle);
+  } else {
+    LED_setOn(gLedHandle, LED_BRIGHTNESS_MAX);
+  }
 
   uint8_t retValue = 0;
   MT_BuildAndSendZToolResponse(((uint8_t)MT_RPC_CMD_SRSP | (uint8_t)MT_RPC_SYS_UTIL), cmdId, 1, &retValue);
