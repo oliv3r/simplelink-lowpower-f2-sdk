@@ -701,6 +701,14 @@ static void stackInit(void)
     //Initialize default poll rates
     nwk_InitializeDefaultPollRates();
 
+    // Use custom function for child aging leave requests
+    pNwkNotMyChildSendLeave = &NwkNotMyChildSendLeaveCustom;
+
+    // Disable child aging leave for Xiaomi/Aqara extAddr range to prevent them from being kicekd out of the network.
+    // They do not support child aging.
+    uint8_t extAddrXiaomi [] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x8d, 0x15, 0x00};
+    NwkDisableChildAgingLeaveAdd(extAddrXiaomi, 3);
+
     /* Initialize MAC buffer */
     macLowLevelBufferInit();
 
