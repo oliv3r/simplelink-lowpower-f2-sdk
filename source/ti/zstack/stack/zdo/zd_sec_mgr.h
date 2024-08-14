@@ -77,6 +77,8 @@ extern "C"
 #include "zcomdef.h"
 #include "zd_app.h"
 
+#include <ti/drivers/apps/LED.h>
+
 /******************************************************************************
  * TYPEDEFS
  */
@@ -120,6 +122,9 @@ extern CONST uint16_t gZDSECMGR_ENTRY_MAX;
 extern CONST uint16_t gZDSECMGR_TC_DEVICE_MAX;
 extern CONST uint16_t gZDSECMGR_TC_DEVICE_IC_MAX;
 extern uint8_t  gZDSECMGR_TC_ATTEMPT_DEFAULT_KEY;
+
+extern bool gLedsDisabled;
+extern LED_Handle gLedHandle;
 
 typedef struct
 {

@@ -88,6 +88,7 @@ extern "C"
 
 #include <ti/drivers/TRNG.h>
 #include <ti/drivers/cryptoutils/cryptokey/CryptoKeyPlaintext.h>
+#include "ti_drivers_config.h"
 
 /******************************************************************************
  * CONSTANTS
@@ -145,6 +146,8 @@ typedef struct
  */
 extern CONST uint8_t gMAX_NWK_SEC_MATERIAL_TABLE_ENTRIES;
 extern pfnZdoCb zdoCBFunc[MAX_ZDO_CB_FUNC];
+bool gLedsDisabled = FALSE;
+LED_Handle gLedHandle;
 
 /******************************************************************************
  * EXTERNAL FUNCTIONS
@@ -1545,6 +1548,23 @@ void ZDSecMgrConfig( void )
   }
 }
 
+void updateLED( void )
+{
+    if (gLedHandle == NULL) {
+      LED_Params ledParams;
+      LED_Params_init(&ledParams);
+      gLedHandle = LED_open(CONFIG_LED_GREEN, &ledParams);
+    }
+
+    if (gLedsDisabled == FALSE && gLedHandle != NULL) {
+        if (ZDSecMgrPermitJoiningEnabled == TRUE) {
+            LED_setOn(gLedHandle, LED_BRIGHTNESS_MAX);
+        } else {
+            LED_setOff(gLedHandle);
+        }
+    }
+}
+
 /******************************************************************************
  * @fn          ZDSecMgrPermitJoining
  *
@@ -1573,6 +1593,7 @@ uint8_t ZDSecMgrPermitJoining( uint8_t duration )
     ZDSecMgrPermitJoiningEnabled = FALSE;
   }
 
+  updateLED();
   accept = TRUE;
 
   return accept;
@@ -1594,6 +1615,8 @@ void ZDSecMgrPermitJoiningTimeout( void )
     ZDSecMgrPermitJoiningEnabled = FALSE;
     ZDSecMgrPermitJoiningTimed   = FALSE;
   }
+
+  updateLED();
 }
 
 /******************************************************************************
