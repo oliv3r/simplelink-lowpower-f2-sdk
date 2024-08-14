@@ -433,10 +433,13 @@ void afIncomingData( aps_FrameFormat_t *aff, zAddrType_t *SrcAddress, uint16_t S
 #if !defined ( APS_NO_GROUPS )
     // Find the first endpoint for this group
     grpEp = aps_FindGroupForEndpoint( aff->GroupID, APS_GROUPS_FIND_FIRST );
-    if ( grpEp == APS_GROUPS_EP_NOT_FOUND )
-      return;   // No endpoint found
+    if ( grpEp == APS_GROUPS_EP_NOT_FOUND ) {
+      epDesc = afFindEndPointDesc( 1 );
+    }
+    else {
+      epDesc = afFindEndPointDesc( grpEp );
+    }
 
-    epDesc = afFindEndPointDesc( grpEp );
     if ( epDesc == NULL )
       return;   // Endpoint descriptor not found
 
