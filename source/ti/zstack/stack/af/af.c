@@ -483,7 +483,8 @@ void afIncomingData( aps_FrameFormat_t *aff, zAddrType_t *SrcAddress, uint16_t S
     // if the Wildcard ProfileID is received the message should not be sent to ZDO endpoint
     if ( (aff->ProfileID == epProfileID) ||
          ((epDesc->endPoint == ZDO_EP) && (aff->ProfileID == ZDO_PROFILE_ID)) ||
-         ((epDesc->endPoint != ZDO_EP) && ( aff->ProfileID == ZDO_WILDCARD_PROFILE_ID )) )
+         ((epDesc->endPoint != ZDO_EP) && ( aff->ProfileID == ZDO_WILDCARD_PROFILE_ID )) ||
+         ((aff->ProfileID >= 0x100) && (aff->ProfileID <= 0xFC01)) )
     {
       // Save original endpoint
       uint8_t endpoint = aff->DstEndPoint;
