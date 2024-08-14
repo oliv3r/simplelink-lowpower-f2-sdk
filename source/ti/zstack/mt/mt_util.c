@@ -1546,7 +1546,7 @@ static void packDev_t(uint8_t *pBuf, associated_devices_t *pDev)
     *pBuf++ = pDev->linkInfo.rxLqi;
     *pBuf++ = pDev->linkInfo.inKeySeqNum;
     OsalPort_bufferUint32( pBuf, pDev->linkInfo.inFrmCntr );
-    *pBuf += 4;
+    pBuf += 4;
     *pBuf++ = LO_UINT16(pDev->linkInfo.txFailure);
     *pBuf++ = HI_UINT16(pDev->linkInfo.txFailure);
   }
