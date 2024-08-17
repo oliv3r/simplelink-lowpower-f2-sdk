@@ -151,17 +151,21 @@ value that cannot be changed. Please refer to the
         description : "UART baud rate",
         default     : 115200,
         options     : [
-            { name:   1200 },
-            { name:   2400 },
-            { name:   4800 },
-            { name:   9600 },
-            { name:  19200 },
-            { name:  38400 },
-            { name:  57600 },
-            { name: 115200 },
-            { name: 230400 },
-            { name: 460800 },
-            { name: 921600 }
+            { name:    1200 },
+            { name:    2400 },
+            { name:    4800 },
+            { name:    9600 },
+            { name:   19200 },
+            { name:   38400 },
+            { name:   57600 },
+            { name:  115200 },
+            { name:  230400 },
+            { name:  460800 },
+            { name:  921600 },
+            { name: 1200000 },
+            { name: 1500000 },
+            { name: 2000000 },
+            { name: 3000000 }
         ]
     }
 ];
