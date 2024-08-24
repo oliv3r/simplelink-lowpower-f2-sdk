@@ -46,3 +46,6 @@ __pycache__
 
 # backup files
 *~
+
+# Log files
+*.log
