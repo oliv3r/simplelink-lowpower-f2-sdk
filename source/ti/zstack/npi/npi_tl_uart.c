@@ -60,6 +60,7 @@
 #include "npi_config.h"
 #include "npi_tl_uart.h"
 #include <ti/drivers/UART2.h>
+#include <ti/display/DisplayUart2.h>
 
 // ****************************************************************************
 // defines
@@ -119,6 +120,7 @@ static void NPITLUART_eventCallBack(UART2_Handle handle, uint32_t event, uint32_
 //! \brief UART Callback invoked after readsize has been read or timeout
 static void NPITLUART_readCallBack(UART2_Handle handle, void *ptr, size_t size, void *userArg, int_fast16_t status);
 
+extern const Display_Config Display_config[];
 // -----------------------------------------------------------------------------
 //! \brief      This routine initializes the transport layer and opens the port
 //!             of the device.
@@ -141,13 +143,22 @@ void NPITLUART_initializeTransport(uint8_t *tRxBuf, uint8_t *tTxBuf, npiCB_t npi
     UART2_Params_init(&params);
 
 #ifndef TIMAC_AGAMA_FPGA
+    DisplayUart2_HWAttrs *hwAttrs = (DisplayUart2_HWAttrs *)Display_config[CONFIG_DISPLAY_UART].hwAttrs;
+
+#if (NPI_UART_BR == 0)
+    params.baudRate = hwAttrs->baudRate;
+#else
     params.baudRate = NPI_UART_BR;
+#endif // NPI_UART_BR = 0
+    params.dataLength = hwAttrs->dataLength;
+    params.stopBits = hwAttrs->stopBits;
+    params.parityType = hwAttrs->parityType;
 #else
     params.baudRate = (NPI_UART_BR * 4);
-#endif
-
     params.dataLength = UART2_DataLen_8;
     params.stopBits = UART2_StopBits_1;
+#endif
+
     params.readMode = UART2_Mode_CALLBACK;
     params.writeMode = UART2_Mode_CALLBACK;
     params.readReturnMode = UART2_ReadReturnMode_PARTIAL; //Enable Partial Reads
