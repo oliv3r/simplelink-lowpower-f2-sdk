@@ -40,7 +40,6 @@
     let instances    = Display.$instances;
     if (instances == 0) { return; }
 
-    let baudRate     = 0;
     let uart2Index;
     let spiIndex;
     let lcdPowerIndex;
@@ -59,6 +58,11 @@
     let mutexTimeout            = 0;
     let mutexTimeoutValue       = 0;
     let mutexTimeoutInitializer = '(unsigned int)(-1)';
+
+    let baudRate = 0;
+    let dataLength;
+    let stopBits;
+    let parityType;
 
     let instAttrs = {};
     for (let i = 0; i < instances.length; i++) {
@@ -85,6 +89,9 @@
             };
 
             baudRate          = inst.baudRate;
+            dataLength        = inst.dataLength;
+            stopBits          = inst.stopBits;
+            parityType        = inst.parityType;
             mutexTimeout      = inst.mutexTimeout;
             mutexTimeoutValue = inst.mutexTimeoutValue;
 
@@ -132,6 +139,7 @@
 #include <ti/display/Display.h>
 % if (uart2) {
 #include <ti/display/DisplayUart2.h>
+#include <ti/drivers/UART2.h>
 % }
 % if (lcd) {
 #include <ti/display/DisplaySharp.h>
@@ -173,6 +181,9 @@ DisplaySharp_Object displayLcdObject;
 const DisplayUart2_HWAttrs displayUart2HWAttrs = {
     .uartIdx      = `uart2Index`,
     .baudRate     = `baudRate`,
+    .dataLength   = `dataLength`,
+    .stopBits     = `stopBits`,
+    .parityType   = `parityType`,
     .mutexTimeout = `mutexTimeoutInitializer`,
     .strBuf       = displayUART2Buffer,
     .strBufLen    = Display_UART2BUFFERSIZE

@@ -167,6 +167,85 @@ value that cannot be changed. Please refer to the
             { name: 2000000 },
             { name: 3000000 }
         ]
+    },
+    {
+        name        : "dataLength",
+        displayName : "Data Length",
+        description : "UART Data Length",
+        default     : "UART2_DataLen_8",
+        options     : [
+            {
+                name: "UART2_DataLen_5",
+                displayName: "5 bits",
+                description: "Data length is 5 bits."
+            },
+            {
+                name: "UART2_DataLen_6",
+                displayName: "6 bits",
+                description: "Data length is 6 bits."
+            },
+            {
+                name: "UART2_DataLen_7",
+                displayName: "7 bits",
+                description: "Data length is 7 bits."
+            },
+            {
+                name: "UART2_DataLen_8",
+                displayName: "8 bits",
+                description: "Data length is 8 bits."
+            }
+        ]
+    },
+    {
+        name        : "stopBits",
+        displayName : "Stop Bits",
+        description : "UART stop bits",
+        default     : "UART2_StopBits_1",
+        options     : [
+            {
+                name: "UART2_StopBits_1",
+                displayName: "1 bit",
+                description: "One stop bit."
+            },
+            {
+                name: "UART2_StopBits_2",
+                displayName: "2 bits",
+                description: "Two stop bits."
+            }
+        ]
+    },
+    {
+        name        : "parityType",
+        displayName : "Parity Type",
+        description : "UART Parity bits",
+        default     : "UART2_Parity_NONE",
+        options     : [
+            {
+                name: "UART2_Parity_NONE",
+                displayName: "None",
+                description: "No parity."
+            },
+            {
+                name: "UART2_Parity_EVEN",
+                displayName: "Even",
+                description: "Parity bit is even."
+            },
+            {
+                name: "UART2_Parity_ODD",
+                displayName: "Odd",
+                description: "Parity bit is odd."
+            },
+            {
+                name: "UART2_Parity_ZERO",
+                displayName: "Zero",
+                description: "Parity bit is always zero."
+            },
+            {
+                name: "UART2_Parity_ONE",
+                displayName: "One",
+                description: "Parity bit is always one."
+            }
+        ]
     }
 ];
 

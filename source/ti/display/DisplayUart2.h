@@ -154,6 +154,12 @@ typedef struct
     unsigned int uartIdx;
     /*! Baud rate for uart */
     uint32_t baudRate;
+    /*! Data length for uart */
+    UART2_DataLen dataLength;
+    /*! Number of stop bits for uart */
+    UART2_StopBits stopBits;
+    /*! Parity bit type for uart */
+    UART2_Parity parityType;
     /*! Timeout for acquiring semaphore */
     unsigned int mutexTimeout;
     /*! Buffer for formatting messages */

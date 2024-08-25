@@ -187,8 +187,11 @@ Display_Handle DisplayUart2Ansi_open(Display_Handle hDisplay, Display_Params *pa
 
     UART2_Params uartParams;
     UART2_Params_init(&uartParams);
-    uartParams.baudRate  = hwAttrs->baudRate;
-    uartParams.writeMode = UART2_Mode_BLOCKING;
+    uartParams.baudRate   = hwAttrs->baudRate;
+    uartParams.dataLength = hwAttrs->dataLength;
+    uartParams.stopBits   = hwAttrs->stopBits;
+    uartParams.parityType = hwAttrs->parityType;
+    uartParams.writeMode  = UART2_Mode_BLOCKING;
 
     object->mutex = SemaphoreP_createBinary(1);
     if (object->mutex == NULL)
