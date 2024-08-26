@@ -1,5 +1,7 @@
 // Firmware version, used in mt_version.c
+#ifndef CODE_REVISION_NUMBER
 #define CODE_REVISION_NUMBER 20240710
+#endif
 
 // Required, otherwise firmware crashes after some uptime in some cases.
 #define NVOCMP_RECOVER_FROM_COMPACT_FAILURE
