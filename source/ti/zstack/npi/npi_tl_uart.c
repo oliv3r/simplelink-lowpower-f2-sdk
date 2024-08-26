@@ -114,6 +114,8 @@ static uint16 NPITLUART_readIsrBuf(size_t size);
 //! \brief UART Callback invoked after UART write completion
 static void NPITLUART_writeCallBack(UART2_Handle handle, void *ptr, size_t size, void *userArg, int_fast16_t status);
 
+static void NPITLUART_eventCallBack(UART2_Handle handle, uint32_t event, uint32_t data, void *userArg);
+
 //! \brief UART Callback invoked after readsize has been read or timeout
 static void NPITLUART_readCallBack(UART2_Handle handle, void *ptr, size_t size, void *userArg, int_fast16_t status);
 
@@ -152,6 +154,8 @@ void NPITLUART_initializeTransport(uint8_t *tRxBuf, uint8_t *tTxBuf, npiCB_t npi
 
     params.readCallback = NPITLUART_readCallBack;
     params.writeCallback = NPITLUART_writeCallBack;
+    params.eventCallback = NPITLUART_eventCallBack;
+    params.eventMask |= UART2_EVENT_TX_FINISHED;
 
     // Open / power on the UART.
     uartHandle = UART2_open(CONFIG_DISPLAY_UART, &params);
@@ -254,28 +258,35 @@ void NPITLUART_handleMrdyEvent(void)
 // -----------------------------------------------------------------------------
 static void NPITLUART_writeCallBack(UART2_Handle handle, void *ptr, size_t size, void *userArg, int_fast16_t status)
 {
-    uint32_t key;
-    key = OsalPort_enterCS();
+}
 
-#if (NPI_FLOW_CTRL == 1)
-    if ( !RxActive )
+static void NPITLUART_eventCallBack(UART2_Handle handle, uint32_t event, uint32_t data, void *userArg)
+{
+    if (event == UART2_EVENT_TX_FINISHED)
     {
-        UART2_readCancel(uartHandle);
+        uint32_t key;
+        key = OsalPort_enterCS();
+
+    #if (NPI_FLOW_CTRL == 1)
+        if ( !RxActive )
+        {
+            UART2_readCancel(uartHandle);
+            if ( npiTransmitCB )
+            {
+                npiTransmitCB(TransportRxLen,TransportTxLen);
+            }
+        }
+
+        TxActive = FALSE;
+    #else
         if ( npiTransmitCB )
         {
-            npiTransmitCB(TransportRxLen,TransportTxLen);
+            npiTransmitCB(0,TransportTxLen);
         }
-    }
+    #endif // NPI_FLOW_CTRL = 1
 
-    TxActive = FALSE;
-#else
-    if ( npiTransmitCB )
-    {
-        npiTransmitCB(0,TransportTxLen);
+        OsalPort_leaveCS(key);
     }
-#endif // NPI_FLOW_CTRL = 1
-
-    OsalPort_leaveCS(key);
 }
 
 // -----------------------------------------------------------------------------
