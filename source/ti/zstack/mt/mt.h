@@ -121,7 +121,7 @@ extern "C"
 #define MT_SYS_OSAL_NV_DELETE                0x12
 #define MT_SYS_OSAL_NV_LENGTH                0x13
 #define MT_SYS_SET_TX_POWER                  0x14
-// 0x15 is available for use. Was used for MT_SYS_JAMMER_PARAMETERS
+#define MT_SYS_GET_TX_POWER                  0x15
 #define MT_SYS_SNIFFER_PARAMETERS            0x16
 #define MT_SYS_ZDIAGS_INIT_STATS             0x17
 #define MT_SYS_ZDIAGS_CLEAR_STATS            0x18

@@ -189,6 +189,7 @@ static void MT_SysSetUtcTime(uint8_t *pBuf);
 static void MT_SysGetUtcTime(void);
 #endif //FEATURE_UTC_TIME
 static void MT_SysSetTxPower(uint8_t *pBuf);
+static void MT_SysGetTxPower(void);
 #if !defined( CC26XX ) \
     && !defined (DeviceFamily_CC26X1) \
     && !defined (DeviceFamily_CC26X2) \
@@ -313,6 +314,9 @@ uint8_t MT_SysCommandProcessing(uint8_t *pBuf)
 #endif // FEATURE_UTC_TIME
     case MT_SYS_SET_TX_POWER:
       MT_SysSetTxPower(pBuf);
+      break;
+    case MT_SYS_GET_TX_POWER:
+      MT_SysGetTxPower();
       break;
 
 // CC253X MAC Network Processor does not have NV support
@@ -1687,6 +1691,26 @@ static void MT_SysSetTxPower(uint8_t *pBuf)
   // either: MAC_SUCCESS or MAC_INVALID_PARAMETER
   MT_BuildAndSendZToolResponse( MT_SRSP_SYS, MT_SYS_SET_TX_POWER, 1,
                                 &status);
+}
+
+/******************************************************************************
+ * @fn      MT_SysGetTxPower
+ *
+ * @brief   Get the transmit power.
+ *
+ * @param   None
+ *
+ * @return  None
+ *****************************************************************************/
+static void MT_SysGetTxPower(void)
+{
+  /* A local variable to hold the signed dBm value of TxPower that is being requested. */
+  uint8_t txPower;
+
+  MAP_MAC_MlmeGetReq(MAC_PHY_TRANSMIT_POWER_SIGNED, &txPower);
+
+  // Send back response with the value of the current txPower.
+  MT_BuildAndSendZToolResponse(MT_SRSP_SYS, MT_SYS_SET_TX_POWER, 1, &txPower);
 }
 
 #if defined ( FEATURE_SYSTEM_STATS )
